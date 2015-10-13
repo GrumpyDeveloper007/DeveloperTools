@@ -1,0 +1,1372 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ModuleCommands>
+  <!-- Specifies all the commands suppored by the module through table 81/82 -->  
+  
+  <Types>
+    <!-- Types ##################################################################################### -->
+    <ResponseEnum>
+      <Value Value="0x00">Success</Value>
+      <Value Value="0x01">No HAN present</Value>
+      <Value Value="0x03">Endpoint list full, device not provisioned</Value>
+      <Value Value="0x04">Device is already provisioned</Value>
+      <Value Value="0x10">Device Not Found</Value>
+      <Value Value="0x20">Unsupported Version Number</Value>
+      <Value Value="0x21">Unsupported commodity Type</Value>
+      <Value Value="0x22">Invalid configuration</Value>
+      <Value Value="0x23">Unsupported Node</Value>
+      <Value Value="0x24">Invalid data</Value>
+      <Value Value="0x25">Command not valid yet, need initialization</Value>
+      <Value Value="0x26">New HAN Commissioned</Value>
+      <Value Value="0x27">No response from HAN module (used internally by M16C)"</Value>
+      <Value Value="0x30">Max number of events exceeded</Value>
+      <Value Value="0x70">Invalid call</Value>
+      <Value Value="0x8A">Invalid channel</Value>
+      <Value Value="0x95">Invalid security level</Value>
+      <Value Value="0xA8">Security not initalized</Value>
+      <Value Value="0xA7">Master key not set</Value>
+      <Value Value="0xEE">Unsupported Command</Value>
+      <Value Value="0xFA">Ping Outstanding</Value>
+      <Value Value="0xFB">Command format error</Value>
+      <Value Value="0xFC">Service discovery for the requested HAN device is not complete.</Value>
+      <Value Value="0xFD">No devices present</Value>
+      <Value Value="0xFE">Invalid device/device not found</Value>
+    </ResponseEnum>
+  </Types>
+  
+  
+  <!-- Send commands ##################################################################################### -->
+
+  <SendCommand>
+    <Description>HAN Initialization</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x80</CommandID>
+      <Version Type="Byte">0x01</Version>
+      <PowerSource Type="Byte">0xFF</PowerSource>
+
+      <SDStatusTable Type="Short">0x0845</SDStatusTable>
+      <SDStatusOffset Type="Short">0x0000</SDStatusOffset>
+      <SDStatusLength Type="Byte">0x01</SDStatusLength>
+      <SDStatusPolarity Type="Byte">0x40</SDStatusPolarity>
+      <SDStatusMask Type="Int">0x00000001</SDStatusMask>
+      
+      <CurrentTierTable Type="Short">0x0037</CurrentTierTable>
+      <CurrentTierOffset Type="Short">0x0007</CurrentTierOffset>
+      <CurrentTierLength Type="Byte">0x02</CurrentTierLength>
+      <CurrentTierPolarity Type="Byte">0x00</CurrentTierPolarity>
+      <CurrentTierMask Type="Int">0x00000007</CurrentTierMask>
+      
+      <NumberDescriptionEntries Type="Byte">0x02</NumberDescriptionEntries>
+
+      <Description0Multi Type="Int">0x00000001</Description0Multi>
+      <Description0Div Type="Int">0x000003E8</Description0Div>
+      <Description0Encoding Type="Byte">0x06</Description0Encoding>
+      <Description0Formula Type="Byte">0x06</Description0Formula>
+      <Description0UOM Type="Byte">0x00</Description0UOM>
+      <Description0Format Type="Byte">0x2C</Description0Format>
+
+      <Description1Multi Type="Int">0x00000001</Description1Multi>
+      <Description1Div Type="Int">0x00002710</Description1Div>
+      <Description1Encoding Type="Byte">0x06</Description1Encoding>
+      <Description1Formula Type="Byte">0x06</Description1Formula>
+      <Description1UOM Type="Byte">0x00</Description1UOM>
+      <Description1Format Type="Byte">0x2B</Description1Format>
+
+      <SummationDeliverTable Type="Short">0x001C</SummationDeliverTable>
+      <SummationDeliverOffset Type="Short">0x000C</SummationDeliverOffset>
+      <SummationDeliverLength Type="Byte">0x04</SummationDeliverLength>
+      <SummationDeliverDescIndex Type="Byte">0x00</SummationDeliverDescIndex>
+
+      <SummationReceiveTable Type="Short">0x001C</SummationReceiveTable>
+      <SummationReceiveOffset Type="Short">0x001C</SummationReceiveOffset>
+      <SummationReceiveLength Type="Byte">0x04</SummationReceiveLength>
+      <SummationReceiveDescIndex Type="Byte">0x00</SummationReceiveDescIndex>
+
+      <InstantaneousTable Type="Short">0x001C</InstantaneousTable>
+      <InstantaneousOffset Type="Short">0x00A8</InstantaneousOffset>
+      <InstantaneousLength Type="Byte">0x04</InstantaneousLength>
+      <InstantaneousDescIndex Type="Byte">0x01</InstantaneousDescIndex>
+
+      <NumberTiers Type="Byte">0x01</NumberTiers>
+
+      <Tier0DeliverTable Type="Short">0x001C</Tier0DeliverTable>
+      <Tier0DeliverOffset Type="Short">0x000C</Tier0DeliverOffset>
+      <Tier0DeliverLength Type="Byte">0x04</Tier0DeliverLength>
+      <Tier0DeliverDescIndex Type="Byte">0x00</Tier0DeliverDescIndex>
+
+      <Tier0ReceieveTable Type="Short">0x001C</Tier0ReceieveTable>
+      <Tier0ReceieveOffset Type="Short">0x001C</Tier0ReceieveOffset>
+      <Tier0ReceieveLength Type="Byte">0x04</Tier0ReceieveLength>
+      <Tier0ReceieveDescIndex Type="Byte">0x00</Tier0ReceieveDescIndex>
+
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>HAN Initialization - disable energy</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x80</CommandID>
+      <Version Type="Byte">0x01</Version>
+      <PowerSource Type="Byte">0xFF</PowerSource>
+
+      <SDStatusTable Type="Short">0xFFFF</SDStatusTable>
+      <SDStatusOffset Type="Short">0x0000</SDStatusOffset>
+      <SDStatusLength Type="Byte">0x00</SDStatusLength>
+      <SDStatusPolarity Type="Byte">0x00</SDStatusPolarity>
+      <SDStatusMask Type="Int">0x00000001</SDStatusMask>
+
+      <CurrentTierTable Type="Short">0x0037</CurrentTierTable>
+      <CurrentTierOffset Type="Short">0x0007</CurrentTierOffset>
+      <CurrentTierLength Type="Byte">0x00</CurrentTierLength>
+      <CurrentTierPolarity Type="Byte">0x00</CurrentTierPolarity>
+      <CurrentTierMask Type="Int">0x00000007</CurrentTierMask>
+
+      <NumberDescriptionEntries Type="Byte">0x02</NumberDescriptionEntries>
+
+      <Description0Multi Type="Int">0x00000001</Description0Multi>
+      <Description0Div Type="Int">0x000003E8</Description0Div>
+      <Description0Encoding Type="Byte">0x06</Description0Encoding>
+      <Description0Formula Type="Byte">0x06</Description0Formula>
+      <Description0UOM Type="Byte">0x00</Description0UOM>
+      <Description0Format Type="Byte">0x2C</Description0Format>
+
+      <Description1Multi Type="Int">0x00000001</Description1Multi>
+      <Description1Div Type="Int">0x00002710</Description1Div>
+      <Description1Encoding Type="Byte">0x06</Description1Encoding>
+      <Description1Formula Type="Byte">0x06</Description1Formula>
+      <Description1UOM Type="Byte">0x00</Description1UOM>
+      <Description1Format Type="Byte">0x2B</Description1Format>
+
+      <SummationDeliverTable Type="Short">0xFFFF</SummationDeliverTable>
+      <SummationDeliverOffset Type="Short">0x000C</SummationDeliverOffset>
+      <SummationDeliverLength Type="Byte">0x04</SummationDeliverLength>
+      <SummationDeliverDescIndex Type="Byte">0x00</SummationDeliverDescIndex>
+
+      <SummationReceiveTable Type="Short">0xFFFF</SummationReceiveTable>
+      <SummationReceiveOffset Type="Short">0x001C</SummationReceiveOffset>
+      <SummationReceiveLength Type="Byte">0x04</SummationReceiveLength>
+      <SummationReceiveDescIndex Type="Byte">0x00</SummationReceiveDescIndex>
+
+      <InstantaneousTable Type="Short">0xFFFF</InstantaneousTable>
+      <InstantaneousOffset Type="Short">0x00A8</InstantaneousOffset>
+      <InstantaneousLength Type="Byte">0x04</InstantaneousLength>
+      <InstantaneousDescIndex Type="Byte">0x01</InstantaneousDescIndex>
+
+      <NumberTiers Type="Byte">0x00</NumberTiers>
+
+      <Tier0DeliverTable Type="Short">0x001C</Tier0DeliverTable>
+      <Tier0DeliverOffset Type="Short">0x000C</Tier0DeliverOffset>
+      <Tier0DeliverLength Type="Byte">0x04</Tier0DeliverLength>
+      <Tier0DeliverDescIndex Type="Byte">0x00</Tier0DeliverDescIndex>
+
+      <Tier0ReceieveTable Type="Short">0x001C</Tier0ReceieveTable>
+      <Tier0ReceieveOffset Type="Short">0x001C</Tier0ReceieveOffset>
+      <Tier0ReceieveLength Type="Byte">0x04</Tier0ReceieveLength>
+      <Tier0ReceieveDescIndex Type="Byte">0x00</Tier0ReceieveDescIndex>
+
+    </Parameters>
+  </SendCommand>
+
+
+  <SendCommand>
+    <Description>Ping</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x72</CommandID>
+      <MACAddress Type="Array" Length="8">{C8,D2,C1,00,00,00,33,9E}</MACAddress>
+    </Parameters>
+  </SendCommand>
+
+
+  <SendCommand>
+    <Description>Request HAN firmware Version</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x01</CommandID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Clear Price Table</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x31</CommandID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Commission HAN</Description>
+    <Notes>The HAN module ships without a network.  In order to perform any HAN operations, a network must first be commissioned.  The FOCUS AX HAN FW allows the host system to actively manage HAN assignment by specifying the channel (11-26) and the HAN ID (1-65534) or allows the FOCUS AX HAN FW to randomly assign the channel and HAN ID.  The channel and HAN ID are BOTH either actively or randomly assigned.  I should be noted that in an installed environment the channel and HAN ID should be randomly assigned by the FW in order to minimize the possibility of neighboring Home Area Networks interfering with one another.  The ability to actively assign specific channels and HAN IDs is retained mostly for development and demonstration purposes.Channel  = 0x00 to randomly assign channel.HAN ID = 0x0000 to randomly assign HAN ID.XHANID=0x0000000000000000 to randomly assign XHANID</Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x33</CommandID>
+      <Channel Type="Byte">0x00</Channel>
+      <HANID Type="Short">0x0000</HANID>
+      <ExtendedHANID Type="Array" Length="8">{00,00,00,00,00,00,00,00}</ExtendedHANID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Decommission HAN</Description>
+    <Notes>This command tells all connected devices to leave the HAN then removes all information about any devices that previously existed on the HAN then removes the network from the HAN module.  HAN RF is disabled when no HAN exists on the module.</Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x02</CommandID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Request HAN parameters</Description>
+    <Notes>Returns the network channel and HAN ID.  If no HAN is commissioned, the channel returned will be 0xEE and the HAN ID will be 0xFFFF which are both invalid values and indicate that no network is present. Beginning at release 065504-01.05.00, the request HAN parameters response includes additional bytes to specify the extended HANID (XHANID).Channel  = 0xEE and HAN ID of 0xFFFF means no HAN is present (Beginning at release 065504-01.05.00, XHANID of 0xFFFFFFFFFFFFFFFF also indicates no HAN is present).</Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x03</CommandID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Request HAN device list</Description>
+    <Notes>      Returns the number of devices on the HAN followed by all of the information required for the host to manage the device list.  The FOCUS AX HAN FW will return the following for each device on the HAN:      Short ID – a unique 16 bit address for a HAN device used by the FOCUS AX HAN FW to communicate with the HAN device.     Device type – application device type as defined by reference 1.      Cluster client support bitmap – a bitmap that indicates which clusters are supported as clients on the HAN device.      MAC address – 64 bit MAC address of the HAN device.    </Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x04</CommandID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Request HAN device list - short</Description>
+    <Notes>This command replaces the functionality of the discontinued (after 065504-01002007) request device list command ant returns the number of devices on the HAN followed by the short ID for each device on the HAN: Short ID – a unique 16 bit address for a HAN device used by the FOCUS AX HAN FW to communicate with the HAN device.
+    </Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x12</CommandID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Request HAN device information - MAC address</Description>
+    <Notes>
+      The FOCUS AX HAN FW will return the index of the device in the application node list, the number of HAN devices on the network and the following for the specified device:
+      Short ID – a unique 16 bit address for a HAN device used by the FOCUS AX HAN FW to communicate with the HAN device.
+      Device type – application device type as defined by reference 1.
+      Cluster client support bitmap – a bitmap that indicates which clusters are supported as clients on the HAN device.
+
+    </Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x36</CommandID>
+      <MACAddress Type="Array" Length="8"></MACAddress>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Request HAN device information - Short ID</Description>
+    <Notes>
+      The FOCUS AX HAN FW will return the index of the device in the application node list, the number of HAN devices on the network and the following for the specified device:
+      Short ID – a unique 16 bit address for a HAN device used by the FOCUS AX HAN FW to communicate with the HAN device.
+      Device type – application device type as defined by reference 1.
+      Cluster client support bitmap – a bitmap that indicates which clusters are supported as clients on the HAN device.
+
+    </Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x36</CommandID>
+      <ShortID Type="Short"></ShortID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Add HAN device</Description>
+    <Notes>
+      This command provides the FOCUS AX HAN FW with the MAC address and the temporary link key of a device that is expected to join the HAN in the future.  This command also specifies to the FOCUS AX HAN FW a time (1-30 days) that the device will be allowed to join.
+      If the in home device being provisioned is the first device being provisioned on the HAN, this command will commission a network.  If a HAN is already present on the meter, the network commissioning step will be skipped by the FW and the in home device will be provisioned.
+      Once the expected device joins and completes service discovery, a Gridstream network event will be generated to indicate that the device is now fully registered on the HAN.  The event will contain all of the necessary information that the host needs to uniquely describe the device (short ID, cluster client support bitmask, device type (as defined reference 1), and MAC address).
+      Another Gridstream network event will be generated once the joining window closes.  The joining window currently stays open for the entire duration specified, even after the device joins.
+    </Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x35</CommandID>
+      <JoinWindow Type="Byte">0x35</JoinWindow>
+      <SecurityFlag Type="Byte">0x35</SecurityFlag>
+      <MACAddress Type="Array" Length="8"></MACAddress>
+      <LinkKey Type="Array" Length="16"></LinkKey>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Clear HAN device list</Description>
+    <Notes>This command tells all connected devices to leave the HAN then removes all information about the HAN devices from module without decommissioning the network.</Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x05</CommandID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Remove HAN device - Short ID</Description>
+    <Notes>This command tells the specified HAN device to leave the HAN, then removes the specified HAN device from the application node list.  The HAN device is targeted by specifying its short ID.  In releases newer than 065504-01.05.02, a HAN device can be targeted for removal by IEEE EUI64 (MAC) address.</Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x69</CommandID>
+      <ShortID Type="Short"></ShortID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Remove HAN device - Short ID</Description>
+    <Notes>This command tells the specified HAN device to leave the HAN, then removes the specified HAN device from the application node list.  The HAN device is targeted by specifying its short ID.  In releases newer than 065504-01.05.02, a HAN device can be targeted for removal by IEEE EUI64 (MAC) address.</Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x69</CommandID>
+      <MACAddress Type="Array" Length="8"></MACAddress>
+    </Parameters>
+  </SendCommand>
+
+  <!-- 
+  <SendCommand>
+    <Description>Allow Joining</Description>
+    <Notes>This command is no longer present in production FW builds.  It is still available but would require a custom build.  This command opens a joining window of up to 254 seconds.  This function is only practical for development and demonstrations that do not use ECC.  When using ECC, the register HAN device command must be used.</Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x34</CommandID>
+      <JoinWindow Type="Byte">0xFF</JoinWindow>
+    </Parameters>
+  </SendCommand>
+-->
+  <SendCommand>
+    <Description>Send Command - Load Control Event</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x97</CommandID>
+      <Reserved1 Type="Short">0xFFFF</Reserved1>
+      <Reserved1 Type="Byte">0xFF</Reserved1>
+      <ClusterID Type="Short">0x0701</ClusterID>
+      <ClusterCommand Type="Byte">0x00</ClusterCommand>
+      <CommandLength Type="Byte">0x17</CommandLength>
+      <EventID Type="Int">0x17112233</EventID>
+      <ZSEClass Type="Short">0x0080</ZSEClass>
+      <ZSEUtilityEnrollmentGroup Type="Byte">0x00</ZSEUtilityEnrollmentGroup>
+      <ZSEStartTime Type="Int">0x00000000</ZSEStartTime>
+      <ZSEDuration Type="Short">0x0005</ZSEDuration>
+      <ZSECriticality Type="Byte"></ZSECriticality>
+      <ZSECoolingTemperatureOffset Type="Byte">0xFF</ZSECoolingTemperatureOffset>
+      <ZSEHeatingTemperatureOffset Type="Byte">0xFF</ZSEHeatingTemperatureOffset>
+      <ZSECoolingTemperatureSetPoint Type="Short">0x8000</ZSECoolingTemperatureSetPoint>
+      <ZSEHeatingTemperatureSetPoint Type="Short">0x8000</ZSEHeatingTemperatureSetPoint>
+      <ZSEAverageLoadAdjustmentPercentage Type="Byte">0x80</ZSEAverageLoadAdjustmentPercentage>
+      <ZSEDutyCycle Type="Byte">0xFF</ZSEDutyCycle>
+      <ZSEEventControl Type="Byte">0x00</ZSEEventControl>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Send Command - Cancel Load Control Event</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x97</CommandID>
+      <Reserved1 Type="Short">0xFFFF</Reserved1>
+      <Reserved1 Type="Byte">0xFF</Reserved1>
+      <ClusterID Type="Short">0x0701</ClusterID>
+      <ClusterCommand Type="Byte">0x01</ClusterCommand>
+      <CommandLength Type="Byte">0x0C</CommandLength>
+      <EventID Type="Int">0x17112233</EventID>
+      <ZSEClass Type="Short"></ZSEClass>
+      <ZSEUtilityEnrollmentGroup Type="Byte"></ZSEUtilityEnrollmentGroup>
+      <ZSECancelControl Type="Byte"></ZSECancelControl>
+      <ZSEEffectiveTime Type="Int"></ZSEEffectiveTime>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Send Command - Cancel ALL Load Control Events</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x97</CommandID>
+      <Reserved1 Type="Short">0xFFFF</Reserved1>
+      <Reserved1 Type="Byte">0xFF</Reserved1>
+      <ClusterID Type="Short">0x0701</ClusterID>
+      <ClusterCommand Type="Byte">0x02</ClusterCommand>
+      <CommandLength Type="Byte">0x01</CommandLength>
+      <ZSECancelControl Type="Byte"></ZSECancelControl>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Send Command - Display Message</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x97</CommandID>
+      <Reserved1 Type="Short">0xFFFF</Reserved1>
+      <Reserved1 Type="Byte">0xFF</Reserved1>
+      <ClusterID Type="Short">0x0703</ClusterID>
+      <ClusterCommand Type="Byte">0x00</ClusterCommand>
+      <CommandLength Type="Byte">0x1B</CommandLength>
+      <ZSEMessageID Type="Int"></ZSEMessageID>
+      <ZSEMessageControl Type="Byte"></ZSEMessageControl>
+      <ZSEMessageStartTime Type="Int"></ZSEMessageStartTime>
+      <ZSEMessageDuration Type="Short"></ZSEMessageDuration>
+      <ZSEMessage Type="String">A simple message</ZSEMessage>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Send Command - Cancel Message</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x97</CommandID>
+      <Reserved1 Type="Short">0xFFFF</Reserved1>
+      <Reserved1 Type="Byte">0xFF</Reserved1>
+      <ClusterID Type="Short">0x0703</ClusterID>
+      <ClusterCommand Type="Byte">0x01</ClusterCommand>
+      <CommandLength Type="Byte">0x05</CommandLength>
+      <ZSEMessageID Type="Int"></ZSEMessageID>
+      <ZSECancelControl Type="Byte"></ZSECancelControl>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Send Command - Long Display Message</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x97</CommandID>
+      <Reserved1 Type="Short">0xFFFF</Reserved1>
+      <Reserved1 Type="Byte">0xFF</Reserved1>
+      <ClusterID Type="Short">0x0703</ClusterID>
+      <ClusterCommand Type="Byte">0x00</ClusterCommand>
+      <CommandLength Type="Byte">0x1B</CommandLength>
+      <ZSEMessageID Type="Int"></ZSEMessageID>
+      <ZSEMessageControl Type="Byte"></ZSEMessageControl>
+      <ZSEMessageStartTime Type="Int"></ZSEMessageStartTime>
+      <ZSEMessageDuration Type="Short"></ZSEMessageDuration>
+      <ZSEMessageLength Type="Short">0x50</ZSEMessageLength>
+      <ZSEMessage Type="String">A simple message</ZSEMessage>
+    </Parameters>
+  </SendCommand>
+<!--
+  <SendCommand>
+    <Description>TODO:Send Command - Publish price</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x97</CommandID>
+      <Reserved1 Type="Short">0xFFFF</Reserved1>
+      <Reserved1 Type="Byte">0xFF</Reserved1>
+      <ClusterID Type="Short">0x0703</ClusterID>
+      <ClusterCommand Type="Byte">0x00</ClusterCommand>
+      <CommandLength Type="Byte">0x1B</CommandLength>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>TODO:Send Command - Publish price table</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x97</CommandID>
+      <Reserved1 Type="Short">0xFFFF</Reserved1>
+      <Reserved1 Type="Byte">0xFF</Reserved1>
+      <ClusterID Type="Short">0x0703</ClusterID>
+      <ClusterCommand Type="Byte">0x00</ClusterCommand>
+      <CommandLength Type="Byte">0x1B</CommandLength>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>TODO:Send Command - Clear price table</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x97</CommandID>
+      <Reserved1 Type="Short">0xFFFF</Reserved1>
+      <Reserved1 Type="Byte">0xFF</Reserved1>
+      <ClusterID Type="Short">0x0703</ClusterID>
+      <ClusterCommand Type="Byte">0x00</ClusterCommand>
+      <CommandLength Type="Byte">0x1B</CommandLength>
+    </Parameters>
+  </SendCommand>
+-->
+  <SendCommand>
+    <Description>Request IEEE address command specification</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x07</CommandID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Request HAN device link key</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x70</CommandID>
+      <ShortID Type="Short"></ShortID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Request network key</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x0F</CommandID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Request HAN Time</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x11</CommandID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Retrieve Antenna Setting</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x37</CommandID>
+      <CommandOption Type="Byte"></CommandOption>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Toggle Antenna Setting</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x37</CommandID>
+      <CommandOption Type="Byte"></CommandOption>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Set Meter Data Update Rate</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x63</CommandID>
+      <MeterReadFrequency Type="Byte"></MeterReadFrequency>
+      <LengthOfTimeToApplyUpdate Type="Byte"></LengthOfTimeToApplyUpdate>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Set Status</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x64</CommandID>
+      <StatusByteBitmap Type="Byte"></StatusByteBitmap>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Request Meter Read Statistics</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x32</CommandID>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Set Service Discovery State</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x37</CommandID>
+      <ShortID Type="Short"></ShortID>
+      <State Type="Byte"></State>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>HAN Tunnel Send</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0xA0</CommandID>
+      <Length Type="Byte"></Length>
+      <Data Type="Array" Length=""></Data>
+    </Parameters>
+  </SendCommand>
+
+  <SendCommand>
+    <Description>Attribute Read</Description>
+    <Notes></Notes>
+    <Parameters>
+      <CommandID Type="Byte">0xA1</CommandID>
+      <ShortID Type="Short"></ShortID>
+      <IssuerRequestID Type="Int"></IssuerRequestID>
+      <Flags Type="Byte"></Flags>
+      <Endpoint Type="Byte"></Endpoint>
+      <ProfileID Type="Short"></ProfileID>
+      <ClusterID Type="Short"></ClusterID>
+      <AttributeID Type="Short"></AttributeID>
+      <ManufacturerID Type="Short"></ManufacturerID>
+    </Parameters>
+  </SendCommand>
+
+
+  <!-- Response commands HAN Protocol ##################################################################################### -->
+
+  <ResponseToCommand>
+    <Description>Firmware Version</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5600</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <Reserved Type="Short"></Reserved>
+      <Capabilities Type="Int"></Capabilities>
+      <VersionString Type="String" Length="10"></VersionString>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Radio Time Command</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5601</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>HAN Module Generic</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5602</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>HAN Module Passthrough</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5603</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Commission HAN</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5000</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <HANId Type="Short"></HANId>
+      <Channel Type="Byte"></Channel>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Decommission HAN</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5001</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Provision HAN</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5002</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <DeviceProvisioningResponseCode Type="Byte"></DeviceProvisioningResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Remove Device by Short Address</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5003</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Remove Device by EUI64 Address</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5004</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Clear HAN list</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5005</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>HAN Query</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5200</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <TimeStatus Type="Byte"></TimeStatus>
+      <Reserved Type="Byte"></Reserved>
+      <ModuleTime Type="Int"></ModuleTime>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>HAN Query Parameters</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5201</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <HANID Type="Short"></HANID>
+      <XHANID Type="Array" Length="8"></XHANID>
+      <Channel Type="Byte"></Channel>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Query Module IEEE Address</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5202</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <Reserved Type="Short"></Reserved>
+      <ModuleAddress Type="Array" Length="8"></ModuleAddress>
+    </Parameters>
+  </ResponseToCommand>
+
+
+  <ResponseToCommand>
+    <Description>Query Network Key</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5203</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <Reserved Type="Short"></Reserved>
+      <NetworkKey Type="Array" Length="10"></NetworkKey>
+      <NetworkeyFrameCounter Type="Short"></NetworkeyFrameCounter>
+      <NetworkKeySequenceNumber Type="Byte"></NetworkKeySequenceNumber>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Query Device List</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5204</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <NumberDevices Type="Byte"></NumberDevices>
+      <Reserved Type="Byte"></Reserved>
+      <ShortID1 Type="Short"></ShortID1>
+      <ShortID2 Type="Short"></ShortID2>
+      <ShortID3 Type="Short"></ShortID3>
+      <ShortID4 Type="Short"></ShortID4>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Query Device Info by EUI64 Address</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5206</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <Index Type="Byte"></Index>
+      <NumberDevices Type="Byte"></NumberDevices>
+      <ShortID Type="Short"></ShortID>
+      <DeviceCagegory Type="Short"></DeviceCagegory>
+      <MACAddress Type="Array" Length="08"></MACAddress>
+      <ZigbeeClusterSupport Type="Int"></ZigbeeClusterSupport>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Query Link Key</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5207</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <ShortID Type="Short"></ShortID>
+      <LinkKey Type="Array" Length="10"></LinkKey>
+      <IncomingFrameCounter Type="Int"></IncomingFrameCounter>
+      <OutgoingFrameCounter Type="Int"></OutgoingFrameCounter>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Ping Device Command</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5208</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+
+  <ResponseToCommand>
+    <Description>Host Configuration</Description>
+    <Parameters>
+      <CommandID Type="Short">0xDA00</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Metering Node Configuration</Description>
+    <Parameters>
+      <CommandID Type="Short">0xDA01</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <NodeNumber Type="Byte"></NodeNumber>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Tier Initialzation</Description>
+    <Parameters>
+      <CommandID Type="Short">0xDA02</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <NodeNumber Type="Byte"></NodeNumber>
+      <TierNumber Type="Byte"></TierNumber>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Demand Data</Description>
+    <Parameters>
+      <CommandID Type="Short">0xDA03</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <NodeNumber Type="Byte"></NodeNumber>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>TOU Data</Description>
+    <Parameters>
+      <CommandID Type="Short">0xDA04</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <NodeNumber Type="Byte"></NodeNumber>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Fast Update Mode</Description>
+    <Parameters>
+      <CommandID Type="Short">0xDA05</CommandID>
+      <RequestedFastUpdatePeriod Type="Byte"></RequestedFastUpdatePeriod>
+      <Reserved Type="Short"></Reserved>
+      <Duration Type="Int"></Duration>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Price Table</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5300</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Clear Price Table</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5301</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Load Control Event</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5400</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Cancel Load Control Event</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5401</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Cancel All Load Control Event</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5402</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Display Message</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5500</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <CurrentMessageLength Type="Short"></CurrentMessageLength>
+      <MessageID Type="Int"></MessageID>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Cancel Message</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5501</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Messaging Event</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5700</CommandID>
+      <StatusCode Type="Byte"></StatusCode>
+      <ShortID Type="Short"></ShortID>
+      <MessageID Type="Int"></MessageID>
+      <MessageConfirmationTime Type="Int"></MessageConfirmationTime>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>DRLC Event</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5701</CommandID>
+      <Status Type="Byte"></Status>
+      <ShortID Type="Short"></ShortID>
+      <DRLCEventID Type="Int"></DRLCEventID>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Device Joined Event</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5702</CommandID>
+      <Status Type="Byte"></Status>
+      <EndPoint Type="Byte"></EndPoint>
+      <Reserved Type="Byte"></Reserved>
+      <ClusterSupport Type="Int"></ClusterSupport>
+      <ShortID Type="Short"></ShortID>
+      <ApplicationDeviceType Type="Short"></ApplicationDeviceType>
+      <IEEEAddress Type="Array" Length="08"></IEEEAddress>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Join Window Closed Event</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5703</CommandID>
+      <Status Type="Byte"></Status>
+      <Reserved Type="Short"></Reserved>
+      <IEEEAddress Type="Array" Length="08"></IEEEAddress>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Ping Response Event Command</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5704</CommandID>
+      <Status Type="Byte"></Status>
+      <Reserved Type="Short"></Reserved>
+      <IEEEAddress Type="Array" Length="08"></IEEEAddress>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Ping Timeout Event Command</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5705</CommandID>
+      <Status Type="Byte"></Status>
+      <Reserved Type="Short"></Reserved>
+      <IEEEAddress Type="Array" Length="08"></IEEEAddress>
+    </Parameters>
+  </ResponseToCommand>
+
+  <ResponseToCommand>
+    <Description>Price Acknowledgement Event</Description>
+    <Parameters>
+      <CommandID Type="Short">0x5706</CommandID>
+      <Status Type="Byte"></Status>
+      <Reserved Type="Short"></Reserved>
+      <IEEEAddress Type="Array" Length="08"></IEEEAddress>
+      <ProviderID Type="Int"></ProviderID>
+      <IssuerEventID Type="Int"></IssuerEventID>
+      <UTCTime Type="Int"></UTCTime>
+      <Control Type="Byte"></Control>
+    </Parameters>
+  </ResponseToCommand>
+
+
+
+  <!-- Response commands WAN Protocol ##################################################################################### -->
+
+  <ResponseToCommandWAN>
+    <Description>Request HAN firmware Version Response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x01</CommandID>
+      <FirmwareVersion Type="String" Length="15"></FirmwareVersion>
+      <Status Type="Short">0x00</Status>
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Commission HAN Pass response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x33</CommandID>
+      <Channel Type="Byte"></Channel>
+      <HANID Type="Short"></HANID>
+      <ExtendedHANID Type="Array" Length="8"></ExtendedHANID>
+      <Status Type="Short">0x0000</Status>
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Commission HAN Fail response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x33</CommandID>
+      <ErrorCode Type="Byte"></ErrorCode>
+      <Status Type="ShortENUM">
+        
+        <Value Value="0x25">Command not valid yet, need initialization</Value>
+        <Value Value="0x70">Invalid call</Value>
+        <Value Value="0x8A">Invalid channel</Value>
+        <Value Value="0x95">Invalid security level</Value>
+        <Value Value="0xA8">Security not initalized</Value>
+        <Value Value="0xA7">Master key not set</Value>
+        <Value Value="0xEE">Unsupported Command</Value>
+      </Status>
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Decommission HAN response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x02</CommandID>
+      <Status Type="ShortENUM">
+        <Value Value="0x00">Sucess</Value>
+        <Value Value="0x01">No HAN present</Value>
+        <Value Value="0xEE">Unsupported Command</Value>
+      </Status>
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request HAN parameters</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x03</CommandID>
+      <Channel Type="Byte"></Channel>
+      <HANID Type="Short"></HANID>
+      <ExtendedHANID Type="Array" Length="8"></ExtendedHANID>
+      <Status Type="Short"></Status>
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request HAN device list response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x04</CommandID>
+      <NumberOfDevicesOnNetwork Type="Byte"></NumberOfDevicesOnNetwork>
+      
+      <ShortID1 Type="Short"></ShortID1>
+      <ApplicationDeviceType1 Type="Short"></ApplicationDeviceType1>
+      <ClientSupport1 Type="Byte"></ClientSupport1>
+      <MACAddress1 Type="Array" Length="8">{01,02,03,04,05,06,07,08}</MACAddress1>
+
+      <ShortID2 Type="Short"></ShortID2>
+      <ApplicationDeviceType2 Type="Short"></ApplicationDeviceType2>
+      <ClientSupport2 Type="Byte"></ClientSupport2>
+      <MACAddress2 Type="Array" Length="8">{01,02,03,04,05,06,07,08}</MACAddress2>
+
+      <ShortID3 Type="Short"></ShortID3>
+      <ApplicationDeviceType3 Type="Short"></ApplicationDeviceType3>
+      <ClientSupport3 Type="Byte"></ClientSupport3>
+      <MACAddress3 Type="Array" Length="8">{01,02,03,04,05,06,07,08}</MACAddress3>
+
+      <Status Type="Short"></Status>
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request HAN device list response Failed</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x04</CommandID>
+      <NumberOfDevicesOnNetwork Type="Byte">0xFD</NumberOfDevicesOnNetwork>
+
+      <Status Type="Short"></Status>
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request HAN device list(short) response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x12</CommandID>
+      <NumberOfDevicesOnNetwork Type="Byte"></NumberOfDevicesOnNetwork>
+
+      <ShortID1 Type="Short"></ShortID1>
+
+      <ShortID2 Type="Short"></ShortID2>
+
+      <ShortID3 Type="Short"></ShortID3>
+
+      <Status Type="Short"></Status>
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request HAN device list(short) response Failed</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x12</CommandID>
+      <NumberOfDevicesOnNetwork Type="Byte">0xFD</NumberOfDevicesOnNetwork>
+
+      <Status Type="Short"></Status>
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request HAN device information response (if  device is present on HAN)</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x35</CommandID>
+      <Index Type="Byte"></Index>
+      <NumberOfDevicesOnNetwork Type="Byte"></NumberOfDevicesOnNetwork>
+
+      <ShortID1 Type="Short"></ShortID1>
+      <ApplicationDeviceType1 Type="Short"></ApplicationDeviceType1>
+      <ClientSupport1 Type="Byte"></ClientSupport1>
+      <MACAddress1 Type="Array" Length="8">{01,02,03,04,05,06,07,08}</MACAddress1>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request HAN device information response (error conditions)</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x36</CommandID>
+
+      <ErrorCode Type="Byte"></ErrorCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Provision a HAN device response</Description>
+    <Notes>
+      Network commission response codes:
+      0x70 – Invalid call
+      0x8A – Invalid channel
+      0x95 – Invalid security level
+      0xA8 – Security not initialized
+      0xA7 –Master key not set
+
+      Device provisioning response codes:
+      0x03 – Endpoint list full, device not provisioned
+      0x04 – Device is already provisioned
+      0x70 – Invalid call
+    </Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x35</CommandID>
+
+      <NetworkCommissionResponse Type="Byte"></NetworkCommissionResponse>
+      <DeviceProvisioningResponseCode Type="Byte"></DeviceProvisioningResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Clear HAN device list device response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x35</CommandID>
+
+      <ResponseCode Type="Byte"></ResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+
+  <ResponseToCommandWAN>
+    <Description>Remove HAN device response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x69</CommandID>
+
+      <ResponseCode Type="Byte"></ResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Allow joining response</Description>
+    <Notes>
+      00-HAN exists
+      01-No HAN exists
+    </Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x34</CommandID>
+
+      <ResponseCode Type="Byte">0x00</ResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+
+  <ResponseToCommandWAN>
+    <Description>Send Zigbee response</Description>
+    <Notes>
+      Can be a response to any command
+    </Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x97</CommandID>
+
+      <ResponseCode Type="Byte">0x00</ResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+
+  <ResponseToCommandWAN>
+    <Description>Send Long Message Command response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x41</CommandID>
+
+      <ResponseCode Type="Byte">0x00</ResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+
+  <ResponseToCommandWAN>
+    <Description>Publish Price Table command response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x39</CommandID>
+
+      <ResponseCode Type="Byte">0x00</ResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+
+  <ResponseToCommandWAN>
+    <Description>Clear Price Table command response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x31</CommandID>
+
+      <ResponseCode Type="Byte">0x00</ResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request IEEE address response </Description>
+    <Parameters>
+      <CommandID Type="Byte">0x07</CommandID>
+
+      <MACAddress Type="Array" Length="8">{01,02,03,04,05,06,07,08}</MACAddress>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request HAN device link key response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x70</CommandID>
+
+      <LinkKey Type="Array" Length="16">{01,02,03,04,05,06,07,08,09,0A,0B,0C,0D,0E,0F}</LinkKey>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request network key response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x0F</CommandID>
+
+      <NetworkKey Type="Array" Length="16">{01,02,03,04,05,06,07,08,09,0A,0B,0C,0D,0E,0F}</NetworkKey>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request HAN time response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x11</CommandID>
+
+      <HANTime Type="Int"></HANTime>
+      <HANTimeStatus Type="Byte"></HANTimeStatus>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Toggle/Retrieve Antenna response</Description>
+    <Notes>
+      response code (0x80 if antenna 1 is in use or 0x00 if antenna 2 is in use)
+    </Notes>
+    <Parameters>
+      <CommandID Type="Byte">0x37</CommandID>
+
+      <ResponseCode Type="Byte">0x00</ResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+
+  <ResponseToCommandWAN>
+    <Description>Set Meter Data Update Rate response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x63</CommandID>
+
+      <ResponseCode Type="Byte">0x00</ResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Set Status response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x64</CommandID>
+
+      <ResponseCode Type="Byte">0x00</ResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Request Meter Read Statistics response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0x32</CommandID>
+
+      <RequestBeforeResponse Type="Short"></RequestBeforeResponse>
+      <FailedResponses Type="Short"></FailedResponses>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Set Service Discovery State response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0xC8</CommandID>
+
+      <ResponseCode Type="Byte">0x00</ResponseCode>
+
+      <Status Type="Short"></Status>
+
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>HAN Tunnel Response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0xA0</CommandID>
+      <ResponseCode Type="Byte" ></ResponseCode>
+      <Length Type="Byte"></Length>
+      <Data Type="Array"></Data>
+    </Parameters>
+  </ResponseToCommandWAN>
+
+  <ResponseToCommandWAN>
+    <Description>Attribute Read Response</Description>
+    <Parameters>
+      <CommandID Type="Byte">0xA1</CommandID>
+      <ResponseCode Type="Byte"></ResponseCode>
+      <FailureReason Type="Byte"></FailureReason>
+      <IssuerRequestID Type="Int"></IssuerRequestID>
+    </Parameters>
+  </ResponseToCommandWAN>
+
+</ModuleCommands>
