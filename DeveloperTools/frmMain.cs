@@ -147,16 +147,15 @@ namespace DeveloperTools
         }
 
  
-        private void chkNormalUserTest_CheckedChanged(object sender, EventArgs e)
-        {
-            clsStaticOptions.DeveloperOnly = !chkNormalUserTest.Checked;
-        }
-
-
         private void xMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmXML fXml = new frmXML();
             fXml.Show();
+        }
+
+        private void butClose_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

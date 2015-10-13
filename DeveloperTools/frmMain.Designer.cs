@@ -30,10 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.txtInput = new System.Windows.Forms.TextBox();
-            this.txtOutput = new System.Windows.Forms.TextBox();
-            this.chkNormalUserTest = new System.Windows.Forms.CheckBox();
-            this.butClose = new System.Windows.Forms.Button();
+            this.mainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modemSimulatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modemInterfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.qVCSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,7 +38,8 @@
             this.tCPIPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readTestDocumentationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtInput = new System.Windows.Forms.TextBox();
+            this.txtOutput = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,50 +53,19 @@
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // txtInput
+            // mainToolStripMenuItem
             // 
-            this.txtInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtInput.Location = new System.Drawing.Point(12, 27);
-            this.txtInput.Multiline = true;
-            this.txtInput.Name = "txtInput";
-            this.txtInput.Size = new System.Drawing.Size(524, 50);
-            this.txtInput.TabIndex = 1;
-            this.txtInput.Text = resources.GetString("txtInput.Text");
-            this.txtInput.TextChanged += new System.EventHandler(this.txtInput_TextChanged);
-            // 
-            // txtOutput
-            // 
-            this.txtOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOutput.Location = new System.Drawing.Point(12, 83);
-            this.txtOutput.Multiline = true;
-            this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(524, 59);
-            this.txtOutput.TabIndex = 2;
-            // 
-            // chkNormalUserTest
-            // 
-            this.chkNormalUserTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkNormalUserTest.AutoSize = true;
-            this.chkNormalUserTest.Location = new System.Drawing.Point(12, 177);
-            this.chkNormalUserTest.Name = "chkNormalUserTest";
-            this.chkNormalUserTest.Size = new System.Drawing.Size(108, 17);
-            this.chkNormalUserTest.TabIndex = 4;
-            this.chkNormalUserTest.Text = "Normal User Test";
-            this.chkNormalUserTest.UseVisualStyleBackColor = true;
-            this.chkNormalUserTest.CheckedChanged += new System.EventHandler(this.chkNormalUserTest_CheckedChanged);
-            // 
-            // butClose
-            // 
-            this.butClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.butClose.Location = new System.Drawing.Point(174, 148);
-            this.butClose.Name = "butClose";
-            this.butClose.Size = new System.Drawing.Size(98, 23);
-            this.butClose.TabIndex = 6;
-            this.butClose.Text = "close Message";
-            this.butClose.UseVisualStyleBackColor = true;
+            this.mainToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.modemSimulatorToolStripMenuItem,
+            this.modemInterfaceToolStripMenuItem,
+            this.qVCSToolStripMenuItem,
+            this.logViewToolStripMenuItem,
+            this.tCPIPToolStripMenuItem,
+            this.readTestDocumentationToolStripMenuItem,
+            this.xMLToolStripMenuItem});
+            this.mainToolStripMenuItem.Name = "mainToolStripMenuItem";
+            this.mainToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.mainToolStripMenuItem.Text = "Main";
             // 
             // modemSimulatorToolStripMenuItem
             // 
@@ -149,27 +116,34 @@
             this.xMLToolStripMenuItem.Text = "XML";
             this.xMLToolStripMenuItem.Click += new System.EventHandler(this.xMLToolStripMenuItem_Click);
             // 
-            // mainToolStripMenuItem
+            // txtInput
             // 
-            this.mainToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.modemSimulatorToolStripMenuItem,
-            this.modemInterfaceToolStripMenuItem,
-            this.qVCSToolStripMenuItem,
-            this.logViewToolStripMenuItem,
-            this.tCPIPToolStripMenuItem,
-            this.readTestDocumentationToolStripMenuItem,
-            this.xMLToolStripMenuItem});
-            this.mainToolStripMenuItem.Name = "mainToolStripMenuItem";
-            this.mainToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.mainToolStripMenuItem.Text = "Main";
+            this.txtInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtInput.Location = new System.Drawing.Point(12, 27);
+            this.txtInput.Multiline = true;
+            this.txtInput.Name = "txtInput";
+            this.txtInput.Size = new System.Drawing.Size(524, 50);
+            this.txtInput.TabIndex = 1;
+            this.txtInput.Text = resources.GetString("txtInput.Text");
+            this.txtInput.TextChanged += new System.EventHandler(this.txtInput_TextChanged);
+            // 
+            // txtOutput
+            // 
+            this.txtOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtOutput.Location = new System.Drawing.Point(12, 83);
+            this.txtOutput.Multiline = true;
+            this.txtOutput.Name = "txtOutput";
+            this.txtOutput.Size = new System.Drawing.Size(524, 59);
+            this.txtOutput.TabIndex = 2;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(558, 346);
-            this.Controls.Add(this.butClose);
-            this.Controls.Add(this.chkNormalUserTest);
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.txtInput);
             this.Controls.Add(this.menuStrip1);
@@ -191,8 +165,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.TextBox txtInput;
         private System.Windows.Forms.TextBox txtOutput;
-        private System.Windows.Forms.CheckBox chkNormalUserTest;
-        private System.Windows.Forms.Button butClose;
         private System.Windows.Forms.ToolStripMenuItem mainToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modemSimulatorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modemInterfaceToolStripMenuItem;
