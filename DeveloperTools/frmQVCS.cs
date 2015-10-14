@@ -167,20 +167,19 @@ namespace DeveloperTools
                 //sResponse = sResponse;
             }
 
-            //sResponse = System.IO.File.ReadAllText(@"C:\Australis\Utilinet\RadioFirmware\Test.txt");
             string sCurrentRevision = "";
             string sCurrentDescription = "";
             string sCheckedInBy = "";
 
             /*
              *           Labels: 
-        Revision 1.47 labeled by Aquib Fateh as 'Utilinet_S00237-05.05.E22' 
-        Revision 1.50 labeled by Aquib Fateh as 'S00244-05.05.D62' 
-        Revision 1.50 labeled by SunL as 'U14 init version' 
-        Revision 1.47 labeled by Govind Kharangate as 'Utilinet_S00237-
+        Revision 1.47 labeled by *Name* as 'Utilinet_S00237-05.05.E22' 
+        Revision 1.50 labeled by *Name* as 'S00244-05.05.D62' 
+        Revision 1.50 labeled by *Name* as 'U14 init version' 
+        Revision 1.47 labeled by *Name* as 'Utilinet_S00237-
              * 
              * ------------------------------------------- 
-Revision 1.50: created by Aquib Fateh 
+Revision 1.50: created by *Name*
    Last file edit: 4/04/2013 3:08:40 PM
 
 Revision inserted: 4/04/2013 3:10:42 PM
@@ -214,7 +213,6 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
                         {
                             if (stlab.sRevision == newHistory.sRevision)
                             {
-                                //stHist.sLabel = stlab.sLabel;
                                 newHistory.sLabel = stlab.sLabel;
                             }
                         }
@@ -250,7 +248,6 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
 
                     if (bFound == false)
                     {
-                        //m_stLabels.Insert (i,newLabel);
                         if (bAddToLabels == true)
                         {
                             m_stLabels.Add(newLabel);
@@ -295,7 +292,6 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
                 {
                     if (stlab.sRevision == newHistory.sRevision)
                     {
-                        //stHist.sLabel = stlab.sLabel;
                         newHistory.sLabel = stlab.sLabel;
                     }
                 }
@@ -311,7 +307,6 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
             newFile.stHistorys = stHistorys;
             newFile.stLabels = stLabels;
             m_stFiles.Add(newFile);
-            //c:\qvcsbin\qlog Utilinet.ewp
 
         }
 
@@ -337,7 +332,6 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
                     }
                     m_iFileCount++;
                     ReadLog(sDir, f.Substring(f.LastIndexOf ('\\')),false );
-                    //Save f :)
                 }
                 foreach (string d in System.IO.Directory.GetDirectories(sDir))
                 {

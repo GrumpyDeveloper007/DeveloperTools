@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ModuleCommands>
-  <!-- Specifies all the commands suppored by the module through table 81/82 -->  
+  <!-- Specifies all the commands supported by the module through table 81/82 -->  
   
   <Types>
     <!-- Types ##################################################################################### -->
