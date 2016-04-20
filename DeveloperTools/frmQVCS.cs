@@ -57,13 +57,15 @@ namespace DeveloperTools
         private void SaveXML(string sFileName)
         {
             string sXML = "";
+            string sXML2 = "";
             string sLabels;
             string sHistorys;
-            sXML += "<QVCSLog>\r\n";
+            sXML2 += "<QVCSLog>\r\n";
 
-            sXML += "\t<Files>\r\n";
+            sXML2 += "\t<Files>\r\n";
             foreach (stFile stTable in m_stFiles)
             {
+                sXML = "";
                 sXML += "\t\t<File>\r\n";
                 sXML += "\t\t\t<Name>" + stTable.sFileName + "</Name>\r\n";
                 sXML += "\t\t\t<Path>" + stTable.sPath  + "</Path>\r\n";
@@ -96,14 +98,15 @@ namespace DeveloperTools
                 sXML += sHistorys;
 
                 sXML += "\t\t</File>\r\n";
+                sXML2 += sXML.Replace("&", "&amp;");
             }
-            sXML += "\t</Files>\r\n";
+            sXML2 += "\t</Files>\r\n";
 
-            sXML += "</QVCSLog>\r\n";
+            sXML2 += "</QVCSLog>\r\n";
 
-            sXML = sXML.Replace("&", "&amp;");
+            
 
-            System.IO.File.WriteAllText(sFileName, sXML);
+            System.IO.File.WriteAllText(sFileName, sXML2);
         }
 
 
@@ -161,7 +164,7 @@ namespace DeveloperTools
 
             string sError;
             string sResponse;
-            sResponse = CommandLineHelper.Run(@"C:\Development\QVCSBin\qlog ","\""+ sFileName +"\"" , out sError, sPath);
+            sResponse = CommandLineHelper.Run(@"C:\QVCSBin\qlog ","\""+ sFileName +"\"" , out sError, sPath);
             if (sError.Length > 0 || (sResponse.Length < 50 && sResponse.Contains( " not found!")==false))
             {
                 //sResponse = sResponse;
@@ -170,6 +173,7 @@ namespace DeveloperTools
             string sCurrentRevision = "";
             string sCurrentDescription = "";
             string sCheckedInBy = "";
+            string lastLabel = "";
 
             /*
              *           Labels: 
@@ -214,8 +218,11 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
                             if (stlab.sRevision == newHistory.sRevision)
                             {
                                 newHistory.sLabel = stlab.sLabel;
+                                lastLabel = stlab.sLabel;
                             }
                         }
+                        if (newHistory.sLabel=="")
+                        { newHistory.sLabel = lastLabel; }
                         sCurrentRevision = "";
                         stHistorys.Add(newHistory);
                     }
@@ -322,7 +329,7 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
 
         private void TreeScan(string sDir)
         {
-            if (sDir.Contains(".svn") == false)
+            if (sDir.Contains(".git") == false)
             {
                 foreach (string f in System.IO.Directory.GetFiles(sDir))
                 {
@@ -425,17 +432,18 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
             for (int i = m_stLabels.Count - 1; i > 0; i--)
             {
                 sResponse = CommandLineHelper.Run(@"c:\qvcsbin\qrecurse", "-archivetree qget -yes -label " + m_stLabels[i].sLabel + " *.*", out sError, @"C:\Australis\Utilinet\RadioFirmware\");
+                if (sError.Length > 0)
+                {
+                    sError = sError;
+                }
 
-                if (GetUserName(m_stLabels[i].sLabel).Length == 0)
-                {
-                    sResponseSVN = CommandLineHelper.Run(@"C:\Program Files\TortoiseSVN\bin\svn", " commit --non-interactive --username " + "test" + " --password \"\" -m \"" + m_stLabels[i].sLabel + ":" + GetDescription(m_stLabels[i].sLabel) + "\"", out sErrorSVN, @"C:\Australis\Utilinet\RadioFirmware\");
-                }
-                else
-                {
-                    sResponseSVN = CommandLineHelper.Run(@"C:\Program Files\TortoiseSVN\bin\svn", " commit --non-interactive --username " + GetUserName(m_stLabels[i].sLabel) + " --password \"\" -m \"" + m_stLabels[i].sLabel + ":" + GetDescription(m_stLabels[i].sLabel) + "\"", out sErrorSVN, @"C:\Australis\Utilinet\RadioFirmware\");
-                }
+
+                sResponseSVN = CommandLineHelper.Run("git", " commit -a -m\"" + GetDescription(m_stLabels[i].sLabel) + "\"", out sErrorSVN, @"C:\Australis\Utilinet\RadioFirmware\");
+                sResponseSVN = CommandLineHelper.Run("git", " tag " + m_stLabels[i].sLabel, out sErrorSVN, @"C:\Australis\Utilinet\RadioFirmware\");
+
             }
         }
+        
 
         private float StringToFloat(string sVersion)
         {
