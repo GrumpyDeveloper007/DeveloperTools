@@ -18,12 +18,12 @@ namespace DeveloperTools
     public partial class frmQVCS : Form
     {
 
-        List<stLabel> m_stLabels = new List<stLabel>();
-        List<stFile> m_stFiles = new List<stFile>();
-        string m_lastFileName;
+        List<stLabel> _stLabels = new List<stLabel>();
+        List<stFile> _stFiles = new List<stFile>();
+        string _lastFileName;
 
-        int m_iFileLimit=10000;
-        int m_iFileCount=0;
+        int _iFileLimit=10000;
+        int _iFileCount=0;
 
 
         private struct stLabel
@@ -63,7 +63,7 @@ namespace DeveloperTools
             sXML2 += "<QVCSLog>\r\n";
 
             sXML2 += "\t<Files>\r\n";
-            foreach (stFile stTable in m_stFiles)
+            foreach (stFile stTable in _stFiles)
             {
                 sXML = "";
                 sXML += "\t\t<File>\r\n";
@@ -116,7 +116,7 @@ namespace DeveloperTools
             bool bFirst = true;
             docXML.Load(sFileName);
 
-            m_stFiles.Clear();
+            _stFiles.Clear();
             foreach (XmlNode node in docXML.SelectNodes("QVCSLog/Files/File"))
             {
                 stFile newTable = new stFile();
@@ -145,11 +145,11 @@ namespace DeveloperTools
                 }
                 if (bFirst == true)
                 {
-                    m_stLabels = newTable.stLabels;
+                    _stLabels = newTable.stLabels;
                     bFirst = false;
                 }
 
-                m_stFiles.Add(newTable);
+                _stFiles.Add(newTable);
             }
         }
 
@@ -240,7 +240,7 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
                     stLabel newLabel = new stLabel();
                     newLabel.sLabel = sLine.Trim().Substring(iLabelStart + 1, iLabelEnd - iLabelStart - 1);
                     newLabel.sRevision = sLine.Trim().Substring("Revision ".Length, iRevisionEnd - "Revision ".Length);
-                    foreach (stLabel stlab in m_stLabels)
+                    foreach (stLabel stlab in _stLabels)
                     {
                         if (newLabel.sLabel.Trim().CompareTo (stlab.sLabel.Trim())>0)
                         {
@@ -257,8 +257,8 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
                     {
                         if (bAddToLabels == true)
                         {
-                            m_stLabels.Add(newLabel);
-                            m_lastFileName = sPath + sFileName;
+                            _stLabels.Add(newLabel);
+                            _lastFileName = sPath + sFileName;
                         }
                     }
                     stLabels.Add(newLabel);
@@ -313,15 +313,15 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
             newFile.sPath = sPath;
             newFile.stHistorys = stHistorys;
             newFile.stLabels = stLabels;
-            m_stFiles.Add(newFile);
+            _stFiles.Add(newFile);
 
         }
 
         private void StartTreeScan(string sDir)
         {
-            m_stFiles.Clear();
-            m_stLabels.Clear();
-            m_iFileCount = 0;
+            _stFiles.Clear();
+            _stLabels.Clear();
+            _iFileCount = 0;
             ReadLog(@"C:\Australis\Utilinet\RadioFirmware\INCLUDE", "partinfo.h", true);
             TreeScan(sDir);
         }
@@ -333,11 +333,11 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
             {
                 foreach (string f in System.IO.Directory.GetFiles(sDir))
                 {
-                    if (m_iFileCount > m_iFileLimit)
+                    if (_iFileCount > _iFileLimit)
                     {
                         return;
                     }
-                    m_iFileCount++;
+                    _iFileCount++;
                     ReadLog(sDir, f.Substring(f.LastIndexOf ('\\')),false );
                 }
                 foreach (string d in System.IO.Directory.GetDirectories(sDir))
@@ -362,7 +362,7 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
             GridViewLog.Rows.Clear();
             LoadXML("QVCSLog.xml");
 
-            foreach (stLabel stlab in m_stLabels)
+            foreach (stLabel stlab in _stLabels)
             {
                 if (stlab.sLabel.Length > 0)
                 {
@@ -374,7 +374,7 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
         private string GetDescription(string sLabel)
         {
             string sDescription="";
-            foreach (stFile file in m_stFiles)
+            foreach (stFile file in _stFiles)
             {
                 foreach (stHistory hist in file.stHistorys)
                 {
@@ -390,7 +390,7 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
         private string GetUserName(string sLabel)
         {
             string sUserName = "";
-            foreach (stFile file in m_stFiles)
+            foreach (stFile file in _stFiles)
             {
                 foreach (stHistory hist in file.stHistorys)
                 {
@@ -406,7 +406,7 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
         private void lstLabels_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridViewLog.Rows.Clear();
-            foreach (stFile file in m_stFiles)
+            foreach (stFile file in _stFiles)
             {
                 foreach (stHistory hist in file.stHistorys )
                 {
@@ -429,17 +429,17 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
             string sErrorSVN = "";
             string sResponse = "";
             string sResponseSVN = "";
-            for (int i = m_stLabels.Count - 1; i > 0; i--)
+            for (int i = _stLabels.Count - 1; i > 0; i--)
             {
-                sResponse = CommandLineHelper.Run(@"c:\qvcsbin\qrecurse", "-archivetree qget -yes -label " + m_stLabels[i].sLabel + " *.*", out sError, @"C:\Australis\Utilinet\RadioFirmware\");
+                sResponse = CommandLineHelper.Run(@"c:\qvcsbin\qrecurse", "-archivetree qget -yes -label " + _stLabels[i].sLabel + " *.*", out sError, @"C:\Australis\Utilinet\RadioFirmware\");
                 if (sError.Length > 0)
                 {
                     sError = sError;
                 }
 
 
-                sResponseSVN = CommandLineHelper.Run("git", " commit -a -m\"" + GetDescription(m_stLabels[i].sLabel) + "\"", out sErrorSVN, @"C:\Australis\Utilinet\RadioFirmware\");
-                sResponseSVN = CommandLineHelper.Run("git", " tag " + m_stLabels[i].sLabel, out sErrorSVN, @"C:\Australis\Utilinet\RadioFirmware\");
+                sResponseSVN = CommandLineHelper.Run("git", " commit -a -m\"" + GetDescription(_stLabels[i].sLabel) + "\"", out sErrorSVN, @"C:\Australis\Utilinet\RadioFirmware\");
+                sResponseSVN = CommandLineHelper.Run("git", " tag " + _stLabels[i].sLabel, out sErrorSVN, @"C:\Australis\Utilinet\RadioFirmware\");
 
             }
         }
@@ -472,7 +472,7 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
             GridViewLog.Rows.Clear();
             txtReport.Text = "File history for label " + txtStartRevision.Text + " to " + txtEndRevision.Text +"\r\n\r\n";
 
-            foreach (stFile file in m_stFiles)
+            foreach (stFile file in _stFiles)
             {
                 string sStartRevision="0";
                 string sEndRevision="";
@@ -530,7 +530,7 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
             StartTreeScan(@"C:\Australis\Utilinet\RadioFirmware");
             SaveXML("QVCSLog.xml");
             
-            foreach (stLabel stlab in m_stLabels)
+            foreach (stLabel stlab in _stLabels)
             {
                 if (stlab.sLabel.Length > 0)
                 {

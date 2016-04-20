@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 
@@ -16,8 +10,8 @@ namespace DeveloperTools
     public partial class frmLog : Form
     {
 
-        clsKF2Logger.UpdateHandler m_Target;
-        string m_sLastError;
+        clsKF2Logger.UpdateHandler _Target;
+        string _sLastError;
 
         /// <summary>
         /// 
@@ -60,7 +54,7 @@ namespace DeveloperTools
                 }
                 catch (Exception ex)
                 {
-                    m_sLastError = ex.Message;
+                    _sLastError = ex.Message;
                 }
             });
 
@@ -69,13 +63,13 @@ namespace DeveloperTools
         private void frmLog_Load(object sender, EventArgs e)
         {
             UpdateLog();
-            m_Target = new clsKF2Logger.UpdateHandler(UpdateLog);
-            clsKF2Logger.AddEventHandler (m_Target);
+            _Target = new clsKF2Logger.UpdateHandler(UpdateLog);
+            clsKF2Logger.AddEventHandler (_Target);
         }
 
         private void frmLog_FormClosing(object sender, FormClosingEventArgs e)
         {
-            clsKF2Logger.RemoveEventHandler(m_Target);
+            clsKF2Logger.RemoveEventHandler(_Target);
         }
 
         private void butClear_Click(object sender, EventArgs e)

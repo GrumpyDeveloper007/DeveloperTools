@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -17,16 +12,15 @@ namespace DeveloperTools
     public partial class frmTCPIP : Form
     {
 
-        TcpClient m_SocketClient;
-        System.Threading.Thread TCPWorker;
-        private bool m_Running = true;
-        //private bool m_bRX;
-        private string m_IPAddress;
-        private DateTime m_dtLastCommunication;
-        private DateTime m_dtConnectionTime;
+        TcpClient _SocketClient;
+        Thread TCPWorker;
+        private bool _Running = true;
+        private string _IPAddress;
+        private DateTime _dtLastCommunication;
+        private DateTime _dtConnectionTime;
 
-        private int m_iSecondCounter=0;
-        private string m_sLastError;
+        private int _iSecondCounter=0;
+        private string _sLastError;
 
         delegate void SetTextCallback(string text);
         delegate void CheckBoxCallback(bool text);
@@ -97,24 +91,24 @@ namespace DeveloperTools
         {
             try
             {
-                    m_SocketClient = new TcpClient();
-                    m_SocketClient.Connect(IPAddress.Parse(m_IPAddress), int.Parse(txtPort.Text));
+                    _SocketClient = new TcpClient();
+                    _SocketClient.Connect(IPAddress.Parse(_IPAddress), int.Parse(txtPort.Text));
                     m_Console_UpdateConnectionState(true);
                     if (chkRepeatTest.Checked == true)
                     {
                         butTest_Click(null, null);
                     }
-                    m_dtConnectionTime = DateTime.Now;
+                    _dtConnectionTime = DateTime.Now;
 
                 if (true)//m_Socket.Connected
                 {
 
-                    NetworkStream clientStream = m_SocketClient.GetStream();
+                    NetworkStream clientStream = _SocketClient.GetStream();
                     int bytesRead;
                     byte[] message = new byte[4096];
 
                     //clientStream.ReadTimeout = 1000;
-                    while (m_Running)
+                    while (_Running)
                     {
                         bytesRead = 0;
 
@@ -139,13 +133,13 @@ namespace DeveloperTools
                         }
                         catch (System.Threading.ThreadAbortException ex)
                         {
-                            m_sLastError = ex.Message;
+                            _sLastError = ex.Message;
                             return;
                         }
 
                         catch (Exception ex)
                         {
-                            m_sLastError = ex.Message;
+                            _sLastError = ex.Message;
 
                             //a socket error has occured
                             //break;
@@ -155,9 +149,9 @@ namespace DeveloperTools
                         {
                             //message has successfully been received
                             ASCIIEncoding encoder = new ASCIIEncoding();
-                            if (DateTime.Now.Subtract(m_dtLastCommunication).TotalMilliseconds > 2000)
+                            if (DateTime.Now.Subtract(_dtLastCommunication).TotalMilliseconds > 2000)
                             {
-                                m_dtLastCommunication = DateTime.Now;
+                                _dtLastCommunication = DateTime.Now;
                                 m_Console_SetText( "\r\n" +BitConverter.ToString(message, 0, bytesRead) );//encoder.GetString(message, 0, bytesRead).Replace("\n", "\r\n")
                             }
                             else
@@ -171,7 +165,7 @@ namespace DeveloperTools
                             }
                         }
                     }
-                    m_SocketClient.Close();
+                    _SocketClient.Close();
                     m_Console_UpdateConnectionState(false);
                 }
             }
@@ -187,15 +181,15 @@ namespace DeveloperTools
             m_Console_SetText(sParam + "\r\n");
             byte[] buffer = encoder.GetBytes(sParam + "\r\n");
 
-            if (m_SocketClient.Connected == true)
+            if (_SocketClient.Connected == true)
             {
-                m_SocketClient.GetStream().Write(buffer, 0, buffer.Length);
+                _SocketClient.GetStream().Write(buffer, 0, buffer.Length);
             }
         }
 
         private void frmTCPIP_Load(object sender, EventArgs e)
         {
-            m_IPAddress = cboIPAddress.Text;
+            _IPAddress = cboIPAddress.Text;
             lblConnected.Text = "";
             ModemserialPort.PortName = "COM"+txtOptical.Text ;
             ModemserialPort.Open();
@@ -206,15 +200,15 @@ namespace DeveloperTools
             byte[] GetKF2Version = { 0xAC, 0x00, 0x00, 0x74, 0xAA };
             //byte[] GetKF2Version = { 0xDA, 0xDA, 0xDA, 0xDA, 0xDA, 0xAC, 0x00, 0x00, 0x74, 0xAA, 0x00 };
 
-            if (m_SocketClient.Connected == true)
+            if (_SocketClient.Connected == true)
             {
                 try
                 {
                     m_Console_SetText("\r\n" + "TX: " + BitConverter.ToString(GetKF2Version) + "\r\n");
                     timerConnected.Enabled = false;
                     //lblConnected.Text = DateTime.Now.Subtract(m_dtConnectionTime).TotalMilliseconds.ToString ();
-                    m_dtLastCommunication = DateTime.Now.AddSeconds(-3);
-                    m_SocketClient.GetStream().Write(GetKF2Version, 0, GetKF2Version.Length);
+                    _dtLastCommunication = DateTime.Now.AddSeconds(-3);
+                    _SocketClient.GetStream().Write(GetKF2Version, 0, GetKF2Version.Length);
                 }
                 catch (Exception ex)
                 {
@@ -231,7 +225,7 @@ namespace DeveloperTools
 
         private void butConnect_Click(object sender, EventArgs e)
         {
-            m_Running = true;
+            _Running = true;
             {
                 TCPWorker = new Thread(new ThreadStart(ThreadProc));
             }
@@ -240,17 +234,17 @@ namespace DeveloperTools
 
         private void butDisConnect_Click(object sender, EventArgs e)
         {
-            m_Running = false;
+            _Running = false;
         }
 
         private void frmTCPIP_FormClosing(object sender, FormClosingEventArgs e)
         {
-            m_Running = false;
+            _Running = false;
         }
 
         private void cboIPAddress_SelectedIndexChanged(object sender, EventArgs e)
         {
-            m_IPAddress = cboIPAddress.Text;
+            _IPAddress = cboIPAddress.Text;
         }
 
         private void chkConnected_CheckedChanged(object sender, EventArgs e)
@@ -260,7 +254,7 @@ namespace DeveloperTools
 
         private void cboIPAddress_TextChanged(object sender, EventArgs e)
         {
-            m_IPAddress = cboIPAddress.Text;
+            _IPAddress = cboIPAddress.Text;
         }
 
   
@@ -271,19 +265,19 @@ namespace DeveloperTools
 
         private void txtConsole_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (m_SocketClient.Connected == true)
+            if (_SocketClient.Connected == true)
             {
                 ASCIIEncoding encoder = new ASCIIEncoding();
                 byte[] buffer = encoder.GetBytes(e.KeyChar.ToString());
-                m_dtLastCommunication = DateTime.Now.AddSeconds(-3);
-                m_SocketClient.GetStream().WriteByte(buffer[0]);
+                _dtLastCommunication = DateTime.Now.AddSeconds(-3);
+                _SocketClient.GetStream().WriteByte(buffer[0]);
             }
 
         }
 
         private void timerConnected_Tick(object sender, EventArgs e)
         {
-            lblConnected.Text = DateTime.Now.Subtract(m_dtConnectionTime).TotalMilliseconds.ToString();
+            lblConnected.Text = DateTime.Now.Subtract(_dtConnectionTime).TotalMilliseconds.ToString();
         }
 
         private void chkRepeatTest_CheckedChanged(object sender, EventArgs e)
@@ -293,12 +287,12 @@ namespace DeveloperTools
 
         private void timerConnectionTest_Tick(object sender, EventArgs e)
         {
-            m_iSecondCounter++;
-            if (m_iSecondCounter == 60)
+            _iSecondCounter++;
+            if (_iSecondCounter == 60)
             {
                 m_Console_SetText("\r\n" + DateTime.Now.ToString() + "Connect" + "\r\n");
                 butConnect_Click(sender, e);
-                m_iSecondCounter++;
+                _iSecondCounter++;
             }
             /*if (m_iSecondCounter == 68)
             {
@@ -306,9 +300,9 @@ namespace DeveloperTools
                 m_iSecondCounter++;
             }*/
 
-            if (m_iSecondCounter > 75)
+            if (_iSecondCounter > 75)
             {
-                m_iSecondCounter = 0;
+                _iSecondCounter = 0;
                 butDisConnect_Click(sender, e);
             }
 
@@ -342,20 +336,20 @@ namespace DeveloperTools
 
         private void SendTCPIPMessage(string sMessage )
         {
-            if (m_SocketClient.Connected == true)
+            if (_SocketClient.Connected == true)
             {
                 try
                 {
                     m_Console_SetText("\r\n" + sMessage + "\r\n");
                     timerConnected.Enabled = false;
                     //lblConnected.Text = DateTime.Now.Subtract(m_dtConnectionTime).TotalMilliseconds.ToString ();
-                    m_dtLastCommunication = DateTime.Now.AddSeconds(-3);
+                    _dtLastCommunication = DateTime.Now.AddSeconds(-3);
                     byte[] sendbytes = new byte[sMessage.Length];
                     for (int i = 0; i < sMessage.Length; i++)
                     {
                         sendbytes[i] = (byte)sMessage.ToCharArray()[i];
                     }
-                    m_SocketClient.GetStream().Write(sendbytes, 0, sendbytes.Length);
+                    _SocketClient.GetStream().Write(sendbytes, 0, sendbytes.Length);
                 }
                 catch (Exception ex)
                 {

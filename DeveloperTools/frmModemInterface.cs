@@ -14,10 +14,10 @@ namespace DeveloperTools
     /// </summary>
     public partial class frmModemInterface : Form
     {
-        System.Threading.Thread m_WorkerThread;
-        string m_LastCommand="";
-        string m_LastResponse="";
-        DateTime m_dtLastCommunication;
+        System.Threading.Thread _WorkerThread;
+        string _LastCommand="";
+        string _LastResponse="";
+        DateTime _dtLastCommunication;
 
         string m_sLastError;
 
@@ -30,7 +30,7 @@ namespace DeveloperTools
 
         private void ATCommandThread()
         {
-            Transmit(m_LastCommand);
+            Transmit(_LastCommand);
         }
         
         /// <summary>
@@ -45,19 +45,19 @@ namespace DeveloperTools
         {
             Invoke((MethodInvoker)delegate
             {
-                if (DateTime.Now.Subtract(m_dtLastCommunication).TotalMilliseconds   > 800)
+                if (DateTime.Now.Subtract(_dtLastCommunication).TotalMilliseconds   > 800)
                 {
-                    m_dtLastCommunication = DateTime.Now;
+                    _dtLastCommunication = DateTime.Now;
                     txtData.Text += DateTime.Now.ToString() + ":" + text.Replace("\n", "") + "\r\n";
                 }
                 else
                 {
                     txtData.Text += text.Replace("\n", "\r\n") ;
                 }
-                m_LastResponse+=text.Replace("\n", "\r\n");
+                _LastResponse+=text.Replace("\n", "\r\n");
                 SendMessage(txtData.Handle, WM_VSCROLL, (IntPtr)SB_BOTTOM, IntPtr.Zero);
 
-                if (m_LastResponse.Contains("CON"))
+                if (_LastResponse.Contains("CON"))
                 {
                     timerConnected.Enabled = true;
                 }
@@ -65,12 +65,12 @@ namespace DeveloperTools
             
             });
 
-            if (m_LastResponse.Contains("OK"))
+            if (_LastResponse.Contains("OK"))
             {
-                m_LastResponse = "";
+                _LastResponse = "";
                 if (chkLoop.Checked)
                 {
-                    Transmit(m_LastCommand);
+                    Transmit(_LastCommand);
                 }
             }
 
@@ -78,7 +78,7 @@ namespace DeveloperTools
 
         private void Transmit(string sData)
         {
-            m_LastCommand = sData;
+            _LastCommand = sData;
             try
             {
                 ModemserialPort.WriteLine(sData + "\r\n");
@@ -118,10 +118,10 @@ namespace DeveloperTools
         private void butStart_Click(object sender, EventArgs e)
         {
             cboSendCommand.Text = "AT+CSQ;+COPS?;+CPMS?;+CREG?";
-            m_LastCommand = "AT+CSQ;+COPS?;+CPMS?;+CREG?";
-            m_WorkerThread = new System.Threading.Thread(new System.Threading.ThreadStart(ATCommandThread));
+            _LastCommand = "AT+CSQ;+COPS?;+CPMS?;+CREG?";
+            _WorkerThread = new System.Threading.Thread(new System.Threading.ThreadStart(ATCommandThread));
 
-            m_WorkerThread.Start();
+            _WorkerThread.Start();
         }
 
 
@@ -185,8 +185,8 @@ namespace DeveloperTools
         private void butTest_Click(object sender, EventArgs e)
         {
             txtData.Text = txtData.Text.Replace ("\r\r","\r");
-            m_LastCommand ="+++\r"+ cboSendCommand.Text +"\r\n";
-            Transmit(m_LastCommand);
+            _LastCommand ="+++\r"+ cboSendCommand.Text +"\r\n";
+            Transmit(_LastCommand);
         }
 
         private void butKF2VersionTest_Click(object sender, EventArgs e)
@@ -276,7 +276,7 @@ namespace DeveloperTools
 
         private void timerConnected_Tick(object sender, EventArgs e)
         {
-            lblConnected.Text = DateTime.Now.Subtract(m_dtLastCommunication).TotalMilliseconds.ToString();
+            lblConnected.Text = DateTime.Now.Subtract(_dtLastCommunication).TotalMilliseconds.ToString();
         }
 
         private void butOpen_Click(object sender, EventArgs e)
