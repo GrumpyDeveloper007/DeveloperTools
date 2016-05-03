@@ -373,14 +373,14 @@ Removed LoadProf.c from U1300 and added  DynamicLP.c */
 
         private string GetDescription(string sLabel)
         {
-            string sDescription="";
+            string sDescription= sLabel +"\r\n";
             foreach (stFile file in _stFiles)
             {
                 foreach (stHistory hist in file.stHistorys)
                 {
                     if (hist.sLabel.Contains(sLabel))
                     {
-                        sDescription+= file.sFileName + " - " + hist.sDescription.Replace("\r","").Replace ("\n","") + "\r\n" ;
+                        sDescription+= file.sFileName + " - " + hist.sCheckedInBy + " - " + hist.sDescription.Replace("\r","").Replace ("\n","") + "\r\n" ;
                     }
                 }
             }
